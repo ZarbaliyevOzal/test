@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <button id="wsConnect">connect</button>
+
+  <script>
+    const button = document.querySelector("#wsConnect");
+    button.addEventListener("click", () => {
+      const url = "ws://localhost:4041"
+      const wsClient = new WebSocket(url)
+      wsClient.onopen = () => {
+        console.log(`Connection to ${url} has been established`);
+        wsClient.send("Hello World!");
+      };
+      // receive message from the server
+      wsClient.onmessage = (e) => {
+        console.log(e.data);
+      };
+
+      // Log WebSocket error events
+      wsClient.onerror = (err) => {
+        console.log(`WebSocket error: ${err}`);
+      };
+    })
+  </script>
+</body>
+</html>
